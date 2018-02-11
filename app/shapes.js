@@ -117,12 +117,9 @@ define(function () {
             var html = shapesList.outerHTML;
             window.localStorage.setItem(inputImageName.value, html);
           },
-          load: function() {
-            var savedList, shapesLength;
-
-            var svg = document.getElementById('drawArea');
-            var inputImageName = document.getElementById('imageNameInputId');
-            savedList = window.localStorage.getItem(inputImageName.value) 
+          checkImageExist: function(imageName) {
+            var savedList = window.localStorage.getItem(imageName); 
+            var result = false;
             if (savedList == null) {
                 var errorDialog = document.getElementById('errorDialog');
                 var errorDialogOkBtn = document.getElementById('okBtn');
@@ -130,8 +127,36 @@ define(function () {
                     errorDialog.close();
                     return;
                 });
-                errorDialog.show();
+                errorDialog.showModal();
+            } else {
+                result = true;
             }
+            return result;
+          },
+          load: function() {
+            var savedList, shapesLength;
+
+            var svg = document.getElementById('drawArea');
+            var inputImageName = document.getElementById('imageNameInputId');
+            
+            var imageExists = this.checkImageExist(inputImageName.value); 
+            if (imageExists) {
+                savedList = window.localStorage.getItem(inputImageName.value);
+            } else {
+                return;
+            }
+           
+            var clearCheckBox = document.getElementById('clearCheckBox');
+            var checked = clearCheckBox.checked;
+            if (checked == true) {
+                var existingShapesList = svg.children;
+                var exShapesLength = existingShapesList.length - 1;
+                for (var i = 0; i <= exShapesLength; i++) {
+                    var exShape = existingShapesList.item(0);
+                    svg.removeChild(exShape);
+                } 
+            }
+            
             var html = savedList;// (savedList = window.localStorage.getItem(inputImageName.value)) != null ? savedList : '';
             var parser = new DOMParser();
             var savedSvg = parser.parseFromString(html, 'text/xml').childNodes.item(0);
