@@ -31,20 +31,19 @@
     preserveAspectRatio="xMinYMin meet">
         </svg>
     </div>
-    <dialog id="errorDialog" class="site-dialog">
-            <header class="dialog-header">
-              <h1>Image does not exist</h1>
-            </header>
-            <div class="dialog-content">
-              <p>Image with the given name does not exist. Please check image name.</p>
+    <div id="errorDialog" >
+           <div id="errorDialogContent">
+                <div class="dialog-header">
+                    <h1 id="titleId">Image does not exist</h1>
+                </div>
+                <div class="dialog-body">
+                    <p id="messageId">Image with the given name does not exist. Please check image name.</p>
+                </div>
+                <div class="dialog-footer">
+                    <button id="okBtn">OK</button> 
+                </div>
             </div>
-            <div class="btn-group cf">
-              <button id="okBtn">OK</button> 
-            </div>
-    </dialog>
-
-    
-
+    </div>
 <script data-main="app" src="lib/require.js"></script>
 </body>
 </html>

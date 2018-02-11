@@ -2,7 +2,6 @@ define(function () {
     'use strict';
     return {
         start: function () {
-           // var root = document.getElementById('root');
             var btnRect = document.getElementById('btnRect');
             var btnCircle = document.getElementById('btnCircle');
             var btnLoad = document.getElementById('btnLoad');
@@ -13,39 +12,15 @@ define(function () {
             btnRect.addEventListener('click', this.randomRectangle.bind(this, svg));
             btnSave.addEventListener('click', this.save.bind(this));
             btnLoad.addEventListener('click', this.load.bind(this));
-
-            // var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-            // svg.setAttributeNS(null, 'id', 'drawArea');
-            // svg.setAttributeNS(null, 'height', '300');
-            // svg.setAttributeNS(null, 'width', '100%');
-
-            // var div = document.createElement('div');
-            // var btnCircle = document.createElement('button');
-            // var btnRect = document.createElement('button');
-            // var btnSave = document.createElement('button');
-            // var btnLoad = document.createElement('button');
-            // btnCircle.textContent = 'Draw Circle';
-            // btnCircle.addEventListener('click', this.randomCircle.bind(this, svg));
-            // btnRect.textContent = 'Draw Rectangle';
-            // btnRect.addEventListener('click', this.randomRectangle.bind(this, svg));
-            // btnSave.textContent = 'Save';
-            // btnSave.addEventListener('click', this.save.bind(this));
-            // btnLoad.textContent = 'Load';
-            // btnLoad.addEventListener('click', this.load.bind(this));
-     
-            // div.appendChild(btnCircle);
-            // div.appendChild(btnRect);
-            // div.appendChild(btnSave);
-            // div.appendChild(btnLoad);
-            // root.appendChild(svg);
-            // root.appendChild(div);
         },
         randomCircle: function(svg) {
             console.log('clicked circle');
             var colorsArr = ['green', 'red', 'yellow', 'blue', 'black', 'pink', 'grey', 'purple'];
             console.log('style', svg.clientWidth + 'x' + svg.clientHeight);
-            var cx = Math.floor(Math.random() * (100 - 10 ) + 5);
-            var cy = Math.floor(Math.random() * (100 - 10) + 5);
+            var cx = Math.floor(Math.random() * (svg.clientWidth) );
+            var cy = Math.floor(Math.random() * (svg.clientHeight ));
+            // var cx = Math.floor(Math.random() * (100 - 10 ) + 5);
+            // var cy = Math.floor(Math.random() * (100 - 10) + 5);
             var r = Math.floor(Math.random() * (100 - 30) + 30);
             var color = Math.floor(Math.random() * 8);
             var shape = this.createSVGCircle(cx, cy, r, colorsArr[color]);
@@ -65,8 +40,8 @@ define(function () {
             console.log('clicked rectangle');
             var colorsArr = ['green', 'red', 'yellow', 'blue', 'black', 'pink', 'grey', 'purple'];
         
-            var cx = Math.floor(Math.random() * (100 - 10) + 5);
-            var cy = Math.floor(Math.random() * (100 - 10) + 5);
+            var cx = Math.floor(Math.random() * (svg.clientWidth));
+            var cy = Math.floor(Math.random() * (svg.clientHeight));
             var width = Math.floor(Math.random() * (150 - 60) + 60);
             var height = Math.floor(Math.random() * (150 - 60) + 60);
             var color1 = Math.floor(Math.random() * 8);
@@ -124,10 +99,10 @@ define(function () {
                 var errorDialog = document.getElementById('errorDialog');
                 var errorDialogOkBtn = document.getElementById('okBtn');
                 errorDialogOkBtn.addEventListener('click', function() {
-                    errorDialog.close();
+                    errorDialog.style.display = "none";
                     return;
                 });
-                errorDialog.showModal();
+                errorDialog.style.display = "block";
             } else {
                 result = true;
             }
