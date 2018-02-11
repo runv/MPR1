@@ -1,187 +1,254 @@
 define(function () {
     'use strict';
     return {
+        /**
+         * Starts listening for user actions
+         */
         start: function () {
-            var btnRect = document.getElementById('btnRect');
-            var btnCircle = document.getElementById('btnCircle');
-            var btnLoad = document.getElementById('btnLoad');
-            var btnSave = document.getElementById('btnSave');    
-            var svg = document.getElementById('drawArea');    
+            var oBtnRect = document.getElementById('btnRect');
+            var oBtnCircle = document.getElementById('btnCircle');
+            var oBtnLoad = document.getElementById('btnLoad');
+            var oBtnSave = document.getElementById('btnSave');
+            var oSvg = document.getElementById('drawArea');
 
-            btnCircle.addEventListener('click', this.randomCircle.bind(this, svg));
-            btnRect.addEventListener('click', this.randomRectangle.bind(this, svg));
-            btnSave.addEventListener('click', this.save.bind(this));
-            btnLoad.addEventListener('click', this.load.bind(this));
+            oBtnCircle.addEventListener('click', this.randomCircle.bind(this, oSvg));
+            oBtnRect.addEventListener('click', this.randomRectangle.bind(this, oSvg));
+            oBtnSave.addEventListener('click', this.save.bind(this));
+            oBtnLoad.addEventListener('click', this.load.bind(this));
         },
-        randomCircle: function(svg) {
+        /**
+         * Draws a circle of a random radius with a random solid fill color
+         * at a random position within the drawing area
+         * @param  {Object} oSvg svg drawing area
+         */
+        randomCircle: function (oSvg) {
             console.log('clicked circle');
-            var colorsArr = ['green', 'red', 'yellow', 'blue', 'black', 'pink', 'grey', 'purple'];
-            console.log('style', svg.clientWidth + 'x' + svg.clientHeight);
-            var cx = Math.floor(Math.random() * (svg.clientWidth) );
-            var cy = Math.floor(Math.random() * (svg.clientHeight ));
-            // var cx = Math.floor(Math.random() * (100 - 10 ) + 5);
-            // var cy = Math.floor(Math.random() * (100 - 10) + 5);
-            var r = Math.floor(Math.random() * (100 - 30) + 30);
-            var color = Math.floor(Math.random() * 8);
-            var shape = this.createSVGCircle(cx, cy, r, colorsArr[color]);
-            
-            svg.appendChild(shape);
+            var aColorsArr = ['green', 'red', 'yellow', 'blue', 'black', 'pink', 'grey', 'purple'];
+            console.log('style', oSvg.clientWidth + 'x' + oSvg.clientHeight);
+            var iCx = Math.floor(Math.random() * (oSvg.clientWidth));
+            var iCy = Math.floor(Math.random() * (oSvg.clientHeight));
+            var iR = Math.floor(Math.random() * (100 - 30) + 30);
+            var iColor = Math.floor(Math.random() * 8);
+            var oShape = this.createSVGCircle(iCx, iCy, iR, aColorsArr[iColor]);
+
+            oSvg.appendChild(oShape);
         },
-        createSVGCircle: function(cx, cy, r, color) {
-            var shape = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-            shape.setAttribute('cx', '' + cx + '');
-            shape.setAttribute('cy', '' + cy + '');
-            shape.setAttribute('r', '' + r + '');
-            shape.setAttribute('fill', color);
-            shape.setAttribute('style', 'padding:10');
-            return shape;
+        /**
+         * Generates circle with the given parameters
+         * @param  {number} iCx x coordinate of the circle center
+         * @param  {number} iCy y coordinate of the circle center
+         * @param  {number} iR  radius of the circle
+         * @param  {string} sColor color of the circle
+         */
+        createSVGCircle: function (iCx, iCy, iR, sColor) {
+            var oShape = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            oShape.setAttribute('cx', '' + iCx + '');
+            oShape.setAttribute('cy', '' + iCy + '');
+            oShape.setAttribute('r', '' + iR + '');
+            oShape.setAttribute('fill', sColor);
+            oShape.setAttribute('style', 'padding:10');
+            return oShape;
         },
-        randomRectangle: function(svg) {
+        /**
+         * Draws a rectangle with a radial gradient ﬁll at a random location & size drawing area.
+         * @param  {Object} oSvg svg drawing area
+         */
+        randomRectangle: function (oSvg) {
             console.log('clicked rectangle');
-            var colorsArr = ['green', 'red', 'yellow', 'blue', 'black', 'pink', 'grey', 'purple'];
-        
-            var cx = Math.floor(Math.random() * (svg.clientWidth));
-            var cy = Math.floor(Math.random() * (svg.clientHeight));
-            var width = Math.floor(Math.random() * (150 - 60) + 60);
-            var height = Math.floor(Math.random() * (150 - 60) + 60);
-            var color1 = Math.floor(Math.random() * 8);
-            var color2 = Math.floor(Math.random() * 8);
+            var aColorsArr = ['green', 'red', 'yellow', 'blue', 'black', 'pink', 'grey', 'purple'];
 
-            var rectCount = document.getElementsByTagName('rect').length;
-            var gradientID = 'gradientId' + rectCount;
-            this.createSVGGradient(svg,gradientID,[
-                {offset:'5%', 'stop-color':colorsArr[color1]},
-                {offset:'95%','stop-color':colorsArr[color2]}
-              ]);
-            var shape = this.createSVGRectangle(cx, cy, width, height, "url(#"+gradientID+")");
-            svg.appendChild(shape);
-          },
+            var iCx = Math.floor(Math.random() * (oSvg.clientWidth));
+            var iCy = Math.floor(Math.random() * (oSvg.clientHeight));
+            var iWidth = Math.floor(Math.random() * (150 - 60) + 60);
+            var iHeight = Math.floor(Math.random() * (150 - 60) + 60);
+            var iColor1 = Math.floor(Math.random() * 8);
+            var iColor2 = Math.floor(Math.random() * 8);
 
-          createSVGGradient: function (svg,id,stops){
-            var svgNS = svg.namespaceURI;
-            var grad  = document.createElementNS(svgNS,'radialGradient');
-            grad.setAttribute('id', id);
-            for (var i=0;i<stops.length;i++){
-              var attrs = stops[i];
-              var stop = document.createElementNS(svgNS,'stop');
-              for (var attr in attrs){
-                if (attrs.hasOwnProperty(attr)) stop.setAttribute(attr,attrs[attr]);
-              }
-              grad.appendChild(stop);
+            var iRectCount = document.getElementsByTagName('rect').length;
+            var sGradientID = 'gradientId' + iRectCount;
+            this.createSVGGradient(oSvg, sGradientID, [
+                { offset: '5%', 'stop-color': aColorsArr[iColor1] },
+                { offset: '95%', 'stop-color': aColorsArr[iColor2] }
+            ]);
+            var oShape = this.createSVGRectangle(iCx, iCy, iWidth, iHeight, "url(#" + sGradientID + ")");
+            oSvg.appendChild(oShape);
+        },
+        /**
+         * Generates radial gradient 
+         * @param  {Object} oSvg svg drawing area
+         * @param  {string} sId id of the svg radial gradient element
+         * @param  {Object[]} aStops array of attribute objects for radial gradient: offset and stop-color
+         */
+        createSVGGradient: function (oSvg, sId, aStops) {
+            var sSvgNS = oSvg.namespaceURI;
+            var oGrad = document.createElementNS(sSvgNS, 'radialGradient');
+            oGrad.setAttribute('id', sId);
+            for (var i = 0; i < aStops.length; i++) {
+                var oAttrs = aStops[i];
+                var oStop = document.createElementNS(sSvgNS, 'stop');
+                for (var oAttr in oAttrs) {
+                    if (oAttrs.hasOwnProperty(oAttr)) oStop.setAttribute(oAttr, oAttrs[oAttr]);
+                }
+                oGrad.appendChild(oStop);
             }
-          
-            var defs = svg.querySelector('defs') ||
-                svg.insertBefore( document.createElementNS(svgNS,'defs'), svg.firstChild);
-            return defs.appendChild(grad);
-          },
 
-          createSVGRectangle(x, y, width, height, color) {
-            var shape = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            var oDefs = oSvg.querySelector('defs') ||
+                oSvg.insertBefore(document.createElementNS(sSvgNS, 'defs'), oSvg.firstChild);
+            return oDefs.appendChild(oGrad);
+        },
+        /**
+         * Generates circle with the given parameters
+         * @param  {number} iX x coordinate of the rectangle top corner
+         * @param  {number} iY y coordinate of the rectangle top corner
+         * @param  {number} iWidth width of the ractangle
+         * @param  {number} iHeight height of the rectangle
+         * @param  {string} sColor color of the rectangle
+         */
+        createSVGRectangle(iX, iY, iWidth, iHeight, sColor) {
+            var oShape = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
 
-            shape.setAttribute('x', '' + x + '');
-            shape.setAttribute('y', '' + y + '');
-            shape.setAttribute('width', '' + width + '');
-            shape.setAttribute('height', '' + height + '');
-            shape.setAttribute('fill', color)
-            shape.setAttribute('style', 'padding:10');
-            return shape;
-          },
-          save: function() {
-            var shapesList = document.getElementById('drawArea');
-            var inputImageName = document.getElementById('imageNameInputId');
-            var html = shapesList.outerHTML;
-            window.localStorage.setItem(inputImageName.value, html);
-          },
-          checkImageExist: function(imageName) {
-            var savedList = window.localStorage.getItem(imageName); 
-            var result = false;
-            if (savedList == null) {
-                var errorDialog = document.getElementById('errorDialog');
-                var errorDialogOkBtn = document.getElementById('okBtn');
-                errorDialogOkBtn.addEventListener('click', function() {
-                    errorDialog.style.display = "none";
-                    return;
-                });
-                errorDialog.style.display = "block";
+            oShape.setAttribute('x', '' + iX + '');
+            oShape.setAttribute('y', '' + iY + '');
+            oShape.setAttribute('width', '' + iWidth + '');
+            oShape.setAttribute('height', '' + iHeight + '');
+            oShape.setAttribute('fill', sColor)
+            oShape.setAttribute('style', 'padding:10');
+            return oShape;
+        },
+        /**
+         * Saves the contents of the drawing section to a persistent repository allowing the user to specify a name. 
+         */
+        save: function () {
+            var bLocalStorageAvailable = this.checkLocalStorage();
+            if (bLocalStorageAvailable == false) {
+                return;
+            }
+            var oShapesList = document.getElementById('drawArea');
+            var oInputImageName = document.getElementById('imageNameInputId');
+            var sHtml = oShapesList.outerHTML;
+            window.localStorage.setItem(oInputImageName.value, sHtml);
+        },
+        /**
+         * Checks if local storage is available 
+         */
+        checkLocalStorage: function () {
+            var bResult = false;
+            if (typeof window.localStorage === 'undefined') {
+                this.showErrorMessage('Local Storage Error', 'To fix problems with local storage in IE, please see README file');
             } else {
-                result = true;
+                bResult = true;
             }
-            return result;
-          },
-          load: function() {
-            var savedList, shapesLength;
+            return bResult;
+        },
+        /**
+         * Checks whether image with the given name exists
+         * @param  {string} imageName image name
+         */
+        checkImageExist: function (sImageName) {
+            var bResult = false;
+            var sSavedList = window.localStorage.getItem(sImageName);
 
-            var svg = document.getElementById('drawArea');
-            var inputImageName = document.getElementById('imageNameInputId');
-            
-            var imageExists = this.checkImageExist(inputImageName.value); 
-            if (imageExists) {
-                savedList = window.localStorage.getItem(inputImageName.value);
+            if (sSavedList == null) {
+                this.showErrorMessage('Image does not exist', 'Image with the given name does not exist. Please check image name.');
+            } else {
+                bResult = true;
+            }
+            return bResult;
+        },
+        /**
+         * Shows error modal dialog 
+         * @param  {string} sErrorTitle title of the gialog
+         * @param  {string} sErrorMessage message of the dialog
+         */
+        showErrorMessage: function (sErrorTitle, sErrorMessage) {
+            var oErrorDialog = document.getElementById('errorDialog');
+            var oErrorTitle = document.getElementById('titleId');
+            oErrorTitle.innerHTML = sErrorTitle;
+            var oErrorMessage = document.getElementById('messageId');
+            oErrorMessage.innerHTML = sErrorMessage;
+            var oErrorDialogOkBtn = document.getElementById('okBtn');
+            oErrorDialogOkBtn.addEventListener('click', function () {
+                oErrorDialog.style.display = "none";
+            });
+            oErrorDialog.style.display = "block";
+        },
+        /**
+         *  Loads the contents of an image from the repository into the drawing area.
+         */
+        load: function () {
+            var sSavedList, iShapesLength;
+
+            var oSvg = document.getElementById('drawArea');
+            var oInputImageName = document.getElementById('imageNameInputId');
+
+            var bLocalStorageAvailable = this.checkLocalStorage();
+            if (bLocalStorageAvailable == false) {
+                return;
+            }
+
+            var bImageExists = this.checkImageExist(oInputImageName.value);
+            if (bImageExists == true) {
+                sSavedList = window.localStorage.getItem(oInputImageName.value);
             } else {
                 return;
             }
-           
-            var clearCheckBox = document.getElementById('clearCheckBox');
-            var checked = clearCheckBox.checked;
-            if (checked == true) {
-                var existingShapesList = svg.children;
-                var exShapesLength = existingShapesList.length - 1;
-                for (var i = 0; i <= exShapesLength; i++) {
-                    var exShape = existingShapesList.item(0);
-                    svg.removeChild(exShape);
-                } 
+
+            var oClearCheckBox = document.getElementById('clearCheckBox');
+            var bChecked = oClearCheckBox.checked;
+            if (bChecked == true) {
+                var aExistingShapesList = oSvg.children;
+                var iExShapesLength = aExistingShapesList.length - 1;
+                for (var i = 0; i <= iExShapesLength; i++) {
+                    var oExShape = aExistingShapesList.item(0);
+                    oSvg.removeChild(oExShape);
+                }
             }
-            
-            var html = savedList;// (savedList = window.localStorage.getItem(inputImageName.value)) != null ? savedList : '';
-            var parser = new DOMParser();
-            var savedSvg = parser.parseFromString(html, 'text/xml').childNodes.item(0);
-            var shapesList = savedSvg.children;
-            if (shapesList.length > 0) {
-              shapesLength = shapesList.length - 1;
-              for (var i = 0; i <= shapesLength; i++) {
-                var loadedShape = shapesList.item(i);
-                
-                if (loadedShape != null) {
-                  var type = loadedShape.nodeName;
-                  if (type == "defs") {
-                    var gradientList = loadedShape.children;
-                    var gradientLength = gradientList.length - 1;
-                    for (var j = 0; j <= gradientLength; j++) {
-                        var loadedGradient = gradientList.item(j);
-                        var type = loadedGradient.nodeName;
-                        if (type == 'radialGradient') {
-                            var stops = loadedGradient.getElementsByTagName('stop');  
-                            this.createSVGGradient(svg,loadedGradient.getAttribute('id'),[
-                                {offset:'5%', 'stop-color':stops[0].getAttribute('stop-color')},
-                                {offset:'95%','stop-color':stops[1].getAttribute('stop-color')}
-                              ]);
+
+            var oParser = new DOMParser();
+            var oSavedSvg = oParser.parseFromString(sSavedList, 'text/xml').childNodes.item(0);
+            var aShapesList = oSavedSvg.children;
+            iShapesLength = aShapesList.length - 1;
+            for (var i = 0; i <= iShapesLength; i++) {
+                var oLoadedShape = aShapesList.item(i);
+
+                if (oLoadedShape != null) {
+                    var sType = oLoadedShape.nodeName;
+                    if (sType == "defs") {
+                        var aGradientList = oLoadedShape.children;
+                        var iGradientLength = aGradientList.length - 1;
+                        for (var j = 0; j <= iGradientLength; j++) {
+                            var oLoadedGradient = aGradientList.item(j);
+                            var sType = oLoadedGradient.nodeName;
+                            if (sType == 'radialGradient') {
+                                var aStops = oLoadedGradient.getElementsByTagName('stop');
+                                this.createSVGGradient(oSvg, oLoadedGradient.getAttribute('id'), [
+                                    { offset: '5%', 'stop-color': aStops[0].getAttribute('stop-color') },
+                                    { offset: '95%', 'stop-color': aStops[1].getAttribute('stop-color') }
+                                ]);
+                            }
                         }
                     }
-                  }
-                  
-                  if (type == "rect") {
-                      var x = loadedShape.getAttribute('x');
-                      var y = loadedShape.getAttribute('y');
-                      var width = loadedShape.getAttribute('width');
-                      var height = loadedShape.getAttribute('height');
-                      var color = loadedShape.getAttribute('fill');
-                      var shape = this.createSVGRectangle(x, y, width, height, color);
-                      svg.appendChild(shape);
-                  }
-                  if (type == "circle") {
-                    var x = loadedShape.getAttribute('cx');
-                    var y = loadedShape.getAttribute('cy');
-                    var r = loadedShape.getAttribute('r');
-                    var color = loadedShape.getAttribute('fill');
-                    var shape = this.createSVGCircle(x, y, r, color);
-                    svg.appendChild(shape);
-                }
-                  console.log("type" + type);
-                }
-              }
-            }
-          },
 
-         
+                    if (sType == "rect") {
+                        var sX = oLoadedShape.getAttribute('x');
+                        var sY = oLoadedShape.getAttribute('y');
+                        var sWidth = oLoadedShape.getAttribute('width');
+                        var sHeight = oLoadedShape.getAttribute('height');
+                        var sColor = oLoadedShape.getAttribute('fill');
+                        var oShape = this.createSVGRectangle(sX, sY, sWidth, sHeight, sColor);
+                        oSvg.appendChild(oShape);
+                    }
+                    if (sType == "circle") {
+                        var sX = oLoadedShape.getAttribute('cx');
+                        var sY = oLoadedShape.getAttribute('cy');
+                        var sR = oLoadedShape.getAttribute('r');
+                        var sColor = oLoadedShape.getAttribute('fill');
+                        var oShape = this.createSVGCircle(sX, sY, sR, sColor);
+                        oSvg.appendChild(oShape);
+                    }
+                    console.log("type" + sType);
+                }
+            }
+        }
     };
 });
