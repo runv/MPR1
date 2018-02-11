@@ -6,24 +6,43 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
-
     <div>
+        <h2>Draw Shapes</h2>
+    </div>
+    <div>
+        
+            <div>
+                <label for="imageName">Please enter the name of the image to save/load</label>
+                <input name="imageName" type="text" id="imageNameInputId" size="20" placeholder="Name" />
+                <button id="btnSave">Save</button>
+            </div>
+            <div>
+                <input id="clearCheckBox" type="checkbox">
+                <label for="clearCheckBo">Clear content?</label>
+                <button id="btnLoad">Load</button>
+            </div>
+         
+     </div>
+     <div>
         <button id="btnCircle">Draw Circle</button>
         <button id="btnRect">Draw Rectangle</button>
-        <form> 
-            
-            <label for="imageName">Please enter the name of the image to save/load</label>
-            <input name="imageName" type="text" id="imageNameInputId" size="20" placeholder="Name" />
-
-        </form>
-        <button id="btnSave">Save</button>
-        <button id="btnLoad">Load</button>
      </div>
     <div class="svg-container">
         <svg id="drawArea" class="svg-content" viewBox="0 0 300 300"
     preserveAspectRatio="xMinYMin meet">
         </svg>
     </div>
+    <dialog id="errorDialog" class="site-dialog">
+            <header class="dialog-header">
+              <h1>Image does not exist</h1>
+            </header>
+            <div class="dialog-content">
+              <p>Image with the given name does not exist. Please check image name.</p>
+            </div>
+            <div class="btn-group cf">
+              <button id="okBtn">OK</button> 
+            </div>
+    </dialog>
 
     
 

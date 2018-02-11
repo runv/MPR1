@@ -1,4 +1,5 @@
 define(function () {
+    'use strict';
     return {
         start: function () {
            // var root = document.getElementById('root');
@@ -39,16 +40,6 @@ define(function () {
             // root.appendChild(svg);
             // root.appendChild(div);
         },
-        createShape: function(svg) {
-            var x = Math.random() * (1 + 2 | 0) + 1;
-            var randomNumberForShape = Math.floor(x);
-            if (randomNumberForShape === 1) {
-              createCircle(svg);
-            }
-             else {
-              createRectangle(svg);
-            }
-        },
         randomCircle: function(svg) {
             console.log('clicked circle');
             var colorsArr = ['green', 'red', 'yellow', 'blue', 'black', 'pink', 'grey', 'purple'];
@@ -63,9 +54,9 @@ define(function () {
         },
         createSVGCircle: function(cx, cy, r, color) {
             var shape = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-            shape.setAttribute('cx', ' ' + cx + ' ');
-            shape.setAttribute('cy', ' ' + cy + ' ');
-            shape.setAttribute('r', ' ' + r + ' ');
+            shape.setAttribute('cx', '' + cx + '');
+            shape.setAttribute('cy', '' + cy + '');
+            shape.setAttribute('r', '' + r + '');
             shape.setAttribute('fill', color);
             shape.setAttribute('style', 'padding:10');
             return shape;
@@ -112,10 +103,10 @@ define(function () {
           createSVGRectangle(x, y, width, height, color) {
             var shape = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
 
-            shape.setAttribute('x', ' ' + x + ' ');
-            shape.setAttribute('y', ' ' + y + ' ');
-            shape.setAttribute('width', ' ' + width + ' ');
-            shape.setAttribute('height', ' ' + height + ' ');
+            shape.setAttribute('x', '' + x + '');
+            shape.setAttribute('y', '' + y + '');
+            shape.setAttribute('width', '' + width + '');
+            shape.setAttribute('height', '' + height + '');
             shape.setAttribute('fill', color)
             shape.setAttribute('style', 'padding:10');
             return shape;
@@ -124,19 +115,29 @@ define(function () {
             var shapesList = document.getElementById('drawArea');
             var inputImageName = document.getElementById('imageNameInputId');
             var html = shapesList.outerHTML;
-            localStorage.setItem(inputImageName.value, html);
+            window.localStorage.setItem(inputImageName.value, html);
           },
           load: function() {
             var savedList, shapesLength;
 
             var svg = document.getElementById('drawArea');
             var inputImageName = document.getElementById('imageNameInputId');
-            var html = (savedList = localStorage.getItem(inputImageName.value)) != null ? savedList : '';
+            savedList = window.localStorage.getItem(inputImageName.value) 
+            if (savedList == null) {
+                var errorDialog = document.getElementById('errorDialog');
+                var errorDialogOkBtn = document.getElementById('okBtn');
+                errorDialogOkBtn.addEventListener('click', function() {
+                    errorDialog.close();
+                    return;
+                });
+                errorDialog.show();
+            }
+            var html = savedList;// (savedList = window.localStorage.getItem(inputImageName.value)) != null ? savedList : '';
             var parser = new DOMParser();
             var savedSvg = parser.parseFromString(html, 'text/xml').childNodes.item(0);
             var shapesList = savedSvg.children;
             if (shapesList.length > 0) {
-              shapesLength = shapesList.length - 1 | 0;
+              shapesLength = shapesList.length - 1;
               for (var i = 0; i <= shapesLength; i++) {
                 var loadedShape = shapesList.item(i);
                 
@@ -144,7 +145,7 @@ define(function () {
                   var type = loadedShape.nodeName;
                   if (type == "defs") {
                     var gradientList = loadedShape.children;
-                    gradientLength = gradientList.length - 1 | 0;
+                    var gradientLength = gradientList.length - 1;
                     for (var j = 0; j <= gradientLength; j++) {
                         var loadedGradient = gradientList.item(j);
                         var type = loadedGradient.nodeName;
@@ -179,7 +180,8 @@ define(function () {
                 }
               }
             }
-          }
+          },
 
+         
     };
 });
