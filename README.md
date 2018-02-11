@@ -1,7 +1,26 @@
 # MPR1
+## Installing
+
+To run the application locally open index.html in browser.
+
+## User manual:
+
+Draw Rectangle Button: Draws a rectangle with a radial gradient ﬁll at a random location & size drawing area. 
+ 
+Draw Circle Button: Draws a circle of a random radius with a solid ﬁll color at a random location within the drawing area. 
+
+Save Image Button: Saves the contents of the drawing section to a persistent repository allowing the user to specify a name. Name is specified in the input field
+
+Load Image Button: Loads the contents of an image from the repository into the drawing area. 
+To load specific image write name in the input field. If the image with the given name does not exist error dialog will be shown.
+
+Checkbox is to clear the current content of the drawing area when loading an image. 
+
+Rectangle and circle changes the ﬁll of a shape to white on mouse hover. 
 
 
-Problems with local storage on Windows with IE:
+
+## Problems with local storage on Windows with IE:
 1) I you are having issues with web sites using the LocalStorage feature on Windows with IE. When accessing app with the F12 Developer Tools open, a SCRIPT5: Access is denied message appeares on the console.
 The cause is a problem with the settings on the C:\Users\username\Appdata\LocalLow folder in your user profile.
 Each folder on your computer has an integrity setting. More information about the purpose of this setting is here: http://msdn.microsoft.com/en-us/library/bb625964.aspx
