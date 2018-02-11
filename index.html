@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shapes Manipulation</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+
+    <div>
+        <button id="btnCircle">Draw Circle</button>
+        <button id="btnRect">Draw Rectangle</button>
+        <form> 
+            
+            <label for="imageName">Please enter the name of the image to save/load</label>
+            <input name="imageName" type="text" id="imageNameInputId" size="20" placeholder="Name" />
+
+        </form>
+        <button id="btnSave">Save</button>
+        <button id="btnLoad">Load</button>
+     </div>
+    <div class="svg-container">
+        <svg id="drawArea" class="svg-content" viewBox="0 0 300 300"
+    preserveAspectRatio="xMinYMin meet">
+        </svg>
+    </div>
+
+    
+
+<script data-main="app" src="lib/require.js"></script>
+</body>
+</html>
