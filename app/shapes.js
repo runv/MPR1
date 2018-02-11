@@ -25,8 +25,8 @@ define(function () {
             console.log('clicked circle');
             var aColorsArr = ['green', 'red', 'yellow', 'blue', 'black', 'pink', 'grey', 'purple'];
             console.log('style', oSvg.clientWidth + 'x' + oSvg.clientHeight);
-            var iCx = Math.floor(Math.random() * (oSvg.clientWidth));
-            var iCy = Math.floor(Math.random() * (oSvg.clientHeight));
+            var iCx = Math.floor(Math.random() * (300 - 20) + 10);
+            var iCy = Math.floor(Math.random() * (300 - 20) + 10);
             var iR = Math.floor(Math.random() * (100 - 30) + 30);
             var iColor = Math.floor(Math.random() * 8);
             var oShape = this.createSVGCircle(iCx, iCy, iR, aColorsArr[iColor]);
@@ -57,8 +57,8 @@ define(function () {
             console.log('clicked rectangle');
             var aColorsArr = ['green', 'red', 'yellow', 'blue', 'black', 'pink', 'grey', 'purple'];
 
-            var iCx = Math.floor(Math.random() * (oSvg.clientWidth));
-            var iCy = Math.floor(Math.random() * (oSvg.clientHeight));
+            var iCx = Math.floor(Math.random() * (300 - 20) + 10);
+            var iCy = Math.floor(Math.random() * (300 - 20) + 10);
             var iWidth = Math.floor(Math.random() * (150 - 60) + 60);
             var iHeight = Math.floor(Math.random() * (150 - 60) + 60);
             var iColor1 = Math.floor(Math.random() * 8);
