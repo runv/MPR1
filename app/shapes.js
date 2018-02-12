@@ -9,12 +9,14 @@ define(function () {
             var oBtnCircle = document.getElementById('btnCircle');
             var oBtnLoad = document.getElementById('btnLoad');
             var oBtnSave = document.getElementById('btnSave');
+            var oBtnClear = document.getElementById('btnClear');
             var oSvg = document.getElementById('drawArea');
 
             oBtnCircle.addEventListener('click', this.randomCircle.bind(this, oSvg));
             oBtnRect.addEventListener('click', this.randomRectangle.bind(this, oSvg));
             oBtnSave.addEventListener('click', this.save.bind(this));
             oBtnLoad.addEventListener('click', this.load.bind(this));
+            oBtnClear.addEventListener('click', this.clear.bind(this, oSvg));
         },
         /**
          * Draws a circle of a random radius with a random solid fill color
@@ -196,12 +198,7 @@ define(function () {
             var oClearCheckBox = document.getElementById('clearCheckBox');
             var bChecked = oClearCheckBox.checked;
             if (bChecked == true) {
-                var aExistingShapesList = oSvg.children;
-                var iExShapesLength = aExistingShapesList.length - 1;
-                for (var i = 0; i <= iExShapesLength; i++) {
-                    var oExShape = aExistingShapesList.item(0);
-                    oSvg.removeChild(oExShape);
-                }
+               this.clear(oSvg);
             }
 
             var oParser = new DOMParser();
@@ -248,6 +245,18 @@ define(function () {
                     }
                     console.log("type" + sType);
                 }
+            }
+        },
+        /**
+         * Clears the content of drawing area.
+         * @param  {Object} oSvg drawing area
+         */
+        clear: function (oSvg) {
+            var aExistingShapesList = oSvg.children;
+            var iExShapesLength = aExistingShapesList.length - 1;
+            for (var i = 0; i <= iExShapesLength; i++) {
+                var oExShape = aExistingShapesList.item(0);
+                oSvg.removeChild(oExShape);
             }
         }
     };
