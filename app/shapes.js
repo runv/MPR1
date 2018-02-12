@@ -1,4 +1,4 @@
-define(function () {
+define(["app/view/Dialog"], function (Dialog) {
     'use strict';
     return {
         /**
@@ -129,6 +129,9 @@ define(function () {
             var oInputImageName = document.getElementById('imageNameInputId');
             var sHtml = oShapesList.outerHTML;
             window.localStorage.setItem(oInputImageName.value, sHtml);
+            Dialog.showMessage('Save Successful!', 
+                'Image ' + oInputImageName.value + ' was saved.',
+                Dialog.Type.INFO);
         },
         /**
          * Checks if local storage is available 
@@ -136,7 +139,9 @@ define(function () {
         checkLocalStorage: function () {
             var bResult = false;
             if (typeof window.localStorage === 'undefined') {
-                this.showErrorMessage('Local Storage Error', 'To fix problems with local storage in IE, please see README file');
+                Dialog.showMessage('Local Storage Error', 
+                'To fix problems with local storage in IE, please see README file',
+                Dialog.Type.ERROR);
             } else {
                 bResult = true;
             }
@@ -151,29 +156,15 @@ define(function () {
             var sSavedList = window.localStorage.getItem(sImageName);
 
             if (sSavedList == null) {
-                this.showErrorMessage('Image does not exist', 'Image with the given name does not exist. Please check image name.');
+                Dialog.showMessage('Image does not exist', 
+                'Image with the given name does not exist. Please check image name.',
+                Dialog.Type.ERROR);
             } else {
                 bResult = true;
             }
             return bResult;
         },
-        /**
-         * Shows error modal dialog 
-         * @param  {string} sErrorTitle title of the gialog
-         * @param  {string} sErrorMessage message of the dialog
-         */
-        showErrorMessage: function (sErrorTitle, sErrorMessage) {
-            var oErrorDialog = document.getElementById('errorDialog');
-            var oErrorTitle = document.getElementById('titleId');
-            oErrorTitle.innerHTML = sErrorTitle;
-            var oErrorMessage = document.getElementById('messageId');
-            oErrorMessage.innerHTML = sErrorMessage;
-            var oErrorDialogOkBtn = document.getElementById('okBtn');
-            oErrorDialogOkBtn.addEventListener('click', function () {
-                oErrorDialog.style.display = "none";
-            });
-            oErrorDialog.style.display = "block";
-        },
+        
         /**
          *  Loads the contents of an image from the repository into the drawing area.
          */

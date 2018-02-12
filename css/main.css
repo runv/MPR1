@@ -33,7 +33,7 @@ circle:hover {
 
 /* The Error Dialog (background) */
 
-#errorDialog {
+#dialog {
     display: none;
     /* Hidden by default */
     position: fixed;
@@ -59,7 +59,7 @@ circle:hover {
 
 /* The Error Dialog Content/Box */
 
-#errorDialogContent {
+#dialogContent {
     position: relative;
     background-color: #fefefe;
     margin: auto;
@@ -101,23 +101,22 @@ circle:hover {
 
 /* The Error Dialog Header */
 
-.dialog-header {
+#dialog-header {
     padding: 2px 10px;
     background-color: #ffffff;
-    color: #f13232;
 }
 
 
 /* The Error Dialog Body */
 
-.dialog-body {
+#dialog-body {
     padding: 2px 10px;
 }
 
 
 /* The Error Dialog Footer */
 
-.dialog-footer {
+#dialog-footer {
     padding: 2px 10px;
     background-color: #ffffff;
     color: white;
