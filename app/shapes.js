@@ -1,4 +1,4 @@
-define(["app/view/Dialog"], function (Dialog) {
+define(["jquery","app/view/Dialog"], function ($, Dialog) {
     'use strict';
     return {
         
@@ -16,11 +16,21 @@ define(["app/view/Dialog"], function (Dialog) {
             var iSvgHeight = oSvg.clientHeight || oSvg.parentNode.clientHeight;
             oSvg.setAttribute("viewBox", "0 0 " + iSvgWidth + " " + iSvgHeight);
 
+            window.addEventListener('resize', this.updateDrawingViewBox.bind(this, oSvg))
             oBtnCircle.addEventListener('click', this.randomCircle.bind(this, oSvg));
             oBtnRect.addEventListener('click', this.randomRectangle.bind(this, oSvg));
             oBtnSave.addEventListener('click', this.save.bind(this));
             oBtnLoad.addEventListener('click', this.load.bind(this));
             oBtnClear.addEventListener('click', this.clear.bind(this, oSvg));
+        },
+        /**
+         * Updates view box width and height 
+         * @param  {Object} oSvg drawing area
+         */
+        updateDrawingViewBox: function(oSvg) {
+            var iSvgWidth = oSvg.clientWidth || oSvg.parentNode.clientWidth;
+            var iSvgHeight = oSvg.clientHeight || oSvg.parentNode.clientHeight;
+            oSvg.setAttribute("viewBox", "0 0 " + iSvgWidth + " " + iSvgHeight);
         },
         /**
          * Draws a circle of a random radius with a random solid fill color
@@ -29,7 +39,7 @@ define(["app/view/Dialog"], function (Dialog) {
          */
         randomCircle: function (oSvg) {
             console.log('clicked circle');
-            var aColorsArr = ['green', 'red', 'yellow', 'blue', 'black', 'pink', 'grey', 'purple'];
+            var aColorsArr = ['green', 'red', 'yellow', 'blue', 'olive', 'pink', 'grey', 'purple'];
             console.log('style', oSvg.clientWidth + 'x' + oSvg.clientHeight);
             var iSvgWidth = oSvg.clientWidth || oSvg.parentNode.clientWidth;
             var iSvgHeight = oSvg.clientHeight || oSvg.parentNode.clientHeight;
@@ -55,7 +65,26 @@ define(["app/view/Dialog"], function (Dialog) {
             oShape.setAttribute('r', '' + iR + '');
             oShape.setAttribute('fill', sColor);
             oShape.setAttribute('style', 'padding:10');
+            oShape.addEventListener('click', this.selectShape.bind(this, oShape));
             return oShape;
+        },
+        /**
+         * Selects shape
+         * @param  {Object} oShape
+         */
+        selectShape: function (oShape) {
+            var bSelected = $(oShape).hasClass('selected');
+            if (bSelected === true) {
+                oShape.removeAttribute('stroke');
+                oShape.removeAttribute('stroke-width');
+                $( oShape ).removeClass( 'selected' );
+                oShape.style.opacity = null;
+            } else {
+                oShape.setAttribute('stroke', 'black');
+                oShape.setAttribute('stroke-width', '5');
+                $( oShape ).addClass( 'selected' );
+                oShape.style.opacity = 1.0;
+            }
         },
         /**
          * Draws a rectangle with a radial gradient ﬁll at a random location & size drawing area.
@@ -63,7 +92,7 @@ define(["app/view/Dialog"], function (Dialog) {
          */
         randomRectangle: function (oSvg) {
             console.log('clicked rectangle');
-            var aColorsArr = ['green', 'red', 'yellow', 'blue', 'black', 'pink', 'grey', 'purple'];
+            var aColorsArr = ['green', 'red', 'yellow', 'blue', 'olive', 'pink', 'grey', 'purple'];
             var iSvgWidth = oSvg.clientWidth || oSvg.parentNode.clientWidth;
             var iSvgHeight = oSvg.clientHeight || oSvg.parentNode.clientHeight;
             var iCx = Math.floor(Math.random() * (iSvgWidth - 10) + 5);
@@ -122,6 +151,7 @@ define(["app/view/Dialog"], function (Dialog) {
             oShape.setAttribute('height', '' + iHeight + '');
             oShape.setAttribute('fill', sColor)
             oShape.setAttribute('style', 'padding:10');
+            oShape.addEventListener('click', this.selectShape.bind(this, oShape));
             return oShape;
         },
         /**

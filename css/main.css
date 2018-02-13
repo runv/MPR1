@@ -55,7 +55,7 @@ body {
 
 rect:hover,
 circle:hover {
-    fill: white;
+    opacity: 0.5;
 }
 
 
