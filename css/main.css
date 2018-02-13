@@ -6,6 +6,7 @@ button {
     margin: 5px;
 }
 
+
 /* Input and Button border */
 
 input,
@@ -14,12 +15,39 @@ button {
     border-radius: 5px;
 }
 
+
+/* html and body size */
+
+html,
+body {
+    height: 100%;
+    width: 95%;
+    margin: 0 auto;
+}
+
+
+/* svg container */
+
+.svg-container {
+    position: relative;
+    height: 70%;
+    width: 100%;
+    margin: 2px 0;
+}
+
+
 /* svg content */
 
 .svg-content {
-    display: block;
-    height: 300px;
+    background-color: ivory;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    bottom: 0;
     border: 1px solid black;
+    overflow: hidden;
 }
 
 

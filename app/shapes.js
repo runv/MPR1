@@ -1,6 +1,7 @@
 define(["app/view/Dialog"], function (Dialog) {
     'use strict';
     return {
+        
         /**
          * Starts listening for user actions
          */
@@ -11,6 +12,9 @@ define(["app/view/Dialog"], function (Dialog) {
             var oBtnSave = document.getElementById('btnSave');
             var oBtnClear = document.getElementById('btnClear');
             var oSvg = document.getElementById('drawArea');
+            var iSvgWidth = oSvg.clientWidth || oSvg.parentNode.clientWidth;
+            var iSvgHeight = oSvg.clientHeight || oSvg.parentNode.clientHeight;
+            oSvg.setAttribute("viewBox", "0 0 " + iSvgWidth + " " + iSvgHeight);
 
             oBtnCircle.addEventListener('click', this.randomCircle.bind(this, oSvg));
             oBtnRect.addEventListener('click', this.randomRectangle.bind(this, oSvg));
@@ -27,9 +31,11 @@ define(["app/view/Dialog"], function (Dialog) {
             console.log('clicked circle');
             var aColorsArr = ['green', 'red', 'yellow', 'blue', 'black', 'pink', 'grey', 'purple'];
             console.log('style', oSvg.clientWidth + 'x' + oSvg.clientHeight);
-            var iCx = Math.floor(Math.random() * (300 - 20) + 10);
-            var iCy = Math.floor(Math.random() * (300 - 20) + 10);
-            var iR = Math.floor(Math.random() * (100 - 30) + 30);
+            var iSvgWidth = oSvg.clientWidth || oSvg.parentNode.clientWidth;
+            var iSvgHeight = oSvg.clientHeight || oSvg.parentNode.clientHeight;
+            var iCx = Math.floor(Math.random() * (iSvgWidth - 10) + 5);
+            var iCy = Math.floor(Math.random() * (iSvgHeight - 10) + 5);
+            var iR = Math.floor(Math.random() * (50 - 30) + 30);
             var iColor = Math.floor(Math.random() * 8);
             var oShape = this.createSVGCircle(iCx, iCy, iR, aColorsArr[iColor]);
 
@@ -58,11 +64,12 @@ define(["app/view/Dialog"], function (Dialog) {
         randomRectangle: function (oSvg) {
             console.log('clicked rectangle');
             var aColorsArr = ['green', 'red', 'yellow', 'blue', 'black', 'pink', 'grey', 'purple'];
-
-            var iCx = Math.floor(Math.random() * (300 - 20) + 10);
-            var iCy = Math.floor(Math.random() * (300 - 20) + 10);
-            var iWidth = Math.floor(Math.random() * (150 - 60) + 60);
-            var iHeight = Math.floor(Math.random() * (150 - 60) + 60);
+            var iSvgWidth = oSvg.clientWidth || oSvg.parentNode.clientWidth;
+            var iSvgHeight = oSvg.clientHeight || oSvg.parentNode.clientHeight;
+            var iCx = Math.floor(Math.random() * (iSvgWidth - 10) + 5);
+            var iCy = Math.floor(Math.random() * (iSvgHeight - 10) + 5);
+            var iWidth = Math.floor(Math.random() * (100 - 20) + 20);
+            var iHeight = Math.floor(Math.random() * (100 - 20) + 20);
             var iColor1 = Math.floor(Math.random() * 8);
             var iColor2 = Math.floor(Math.random() * 8);
 
