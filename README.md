@@ -10,16 +10,20 @@ Draw Rectangle Button: Draws a rectangle with a radial gradient fill at a random
 Draw Circle Button: Draws a circle of a random radius with a solid fill color at a random location within the drawing area. 
 
 Save Image Button: Saves the contents of the drawing section to a persistent repository allowing the user to specify a name. Name is specified in the input field.
-After image is saved successfully the dialog is shown.
+After image is saved successfully the dialog is shown. 
 
 Load Image Button: Loads the contents of an image from the repository into the drawing area. 
-To load specific image write name in the input field. If the image with the given name does not exist error dialog will be shown.
+To load specific image write name in the input field. If the image with the given name does not exist or name is not valid dialog will be shown.
 
 Clear content Button: Clears drawing area.
 
 Checkbox is to clear the current content of the drawing area when loading an image. 
 
-Rectangle and circle changes the fill of a shape to white on mouse hover. 
+Rectangle and circle changes opacity on mouse hover. 
+
+Shapes are selectable on click
+
+You can move a shape after the shape is selected 
 
 
 
